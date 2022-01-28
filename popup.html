@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+	<head>
+	    <meta charset="utf-8">
+      <meta name="description" content="Chrome extension used to track notifications by EsfandTV. A proof of concept for a larger project.">
+      <meta name="author" content="GuacSenpai -- guac@guacsenpai.com">
+      
+      <title>Esfand Updates</title>
+      
+      <script src="js/jquery-3.6.0.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script defer src="/js/all.min.js"></script>
+      <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+      <link href="css/custom.css" rel="stylesheet" media="screen">		
+    </head>
+	
+	<body>
+    <div class="container">
+      <h3 class="text-center">Esfand Updates</h3>
+      <div class="col-md-6 col-sm-12">
+        <div id="liveSection">
+          <div class="panel row g-0 rounded mb-2 overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <h3 id="statusText" class="mb-0"></h3>
+                  <p id="streamTitle" class="card-text mb-auto"></p>
+                  <a id="watchButton" class="btn" style="background-color: #6441a5; color: white;" href="https://twitch.tv/esfandtv" target="_blank" rel="noopener noreferrer">
+                    Watch Live On Twitch
+                  </a>
+            </div>
+            <div class="col-auto">
+                <img id="sectionImage" width="144" height="192" src="https://static-cdn.jtvnw.net/ttv-static/404_boxart.jpg"/>
+            </div>
+        </div>
+
+        </div>
+        <div id="offlineSection" class="d-none">
+          <div class="panel row g-0 rounded mb-2 overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static">
+                <h3 id="statusText-offline" class="mb-0"></h3>          
+                  <p id="streamTitle" class="card-text mb-auto"></p>
+            </div>
+        </div>
+        </div> 
+        
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="panel row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative h-100">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong id="latestTweet" class="d-inline-block mb-2">Loading tweet...</strong>
+            <div>
+              <a id="twitterLink" style="float:right;" href="https://twitter.com/esfandtv" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="float:left;">
+        <button id="settingsBtn"><i class="fa fa-cog fa-lg"></i></button>
+      </div>
+      <div style="float:right;bottom:0;">
+        <a href="https://twitter.com/esfandtv"><i class="fab fa-twitter fa-lg"></i></a>
+        <a href="https://youtube.com/esfandtv"><i class="fab fa-youtube fa-lg"></i></a>
+        <a href="https://instagram.com/esfandtv"><i class="fab fa-instagram fa-lg"></i></a>
+        <a href="https://reddit.com/r/esfandtv"><i class="fab fa-reddit fa-lg"></i></a>
+        <a href="https://discord.gg/esfandtv"><i class="fab fa-discord fa-lg"></i></a>
+      </div>
+    </div>
+    <script src="popup.js"></script>
+	</body>
+</html>
