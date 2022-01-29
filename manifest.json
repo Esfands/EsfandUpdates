@@ -9,7 +9,7 @@
     "host_permissions": [
       "https://api.onlyfands.net/*"
     ],
-    "permissions": ["storage", "notifications", "alarms", "tabs"],
+    "permissions": ["storage", "notifications", "alarms"],
     "action": {
       "default_popup": "popup.html",
       "default_icon": {
