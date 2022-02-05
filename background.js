@@ -25,8 +25,6 @@ async function updateData(firstLoad) {
   const currCategory = data.category;
   const currTitle = data.title;
   
-  
-
   if (currStatus.toLowerCase() === 'offline' && status.toLowerCase() === 'online') {
     const allowNotifications = await getLocalNotificationsData();
     if (allowNotifications) {  
@@ -36,10 +34,12 @@ async function updateData(firstLoad) {
         title: 'Esfand is live!',
         type: 'basic'
       });
-    };  
+    };
+
     await updateStatus(status);
     await updateCategory(category);
     await updateTitle(title);
+
     return;
   } else if (firstLoad) {
       await updateStatus(status);
@@ -99,7 +99,11 @@ function addDefaultStorageData() {
     'title': ''
   }});
 
-  chrome.storage.local.set({'notifications': true})
+  chrome.storage.local.set({'notifications': {
+    'video': true,
+    'category': true,
+    'live': true
+  }});
 }
 
 async function getLocalStreamData() {
