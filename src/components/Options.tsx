@@ -1,5 +1,4 @@
 import { FormGroup, FormControlLabel, Switch } from "@mui/material"
-import { BottomNav } from "./BottomNav"
 export const Options = () => {
     return (
         <>
@@ -10,7 +9,6 @@ export const Options = () => {
             <FormControlLabel control={<Switch />} label="Show Twitter Notifications" />
             <FormControlLabel control={<Switch />} label="Show Esfandradio Notifications" />
         </FormGroup>
-        <BottomNav/>
         </>
     )
 }

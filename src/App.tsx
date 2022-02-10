@@ -1,11 +1,18 @@
-import { Popup } from './components/Popup';
-import { BottomNav } from './components/BottomNav';
+
+import { TitleBar } from './components/TitleBar';
+import { StreamPanel } from './components/StreamPanel';
+import { YoutubePanel } from './components/YoutubePanel';
+import { TwitterPanel } from './components/TwitterPanel';
+import { BottomBar } from './components/BottomBar';
 
 function App() {
   return (
     <div>
-      <Popup />
-      <BottomNav />
+      <TitleBar />
+      <StreamPanel />
+      <YoutubePanel />
+      <TwitterPanel />
+      <BottomBar />
     </div>
   );
 }

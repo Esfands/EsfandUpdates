@@ -1,3 +1,5 @@
+import { Box, Avatar, Grid, Paper, ListItemAvatar, ListItemText, ListItem, Button } from '@mui/material';
+import { borderColor } from '@mui/system';
 import { useState, useEffect } from 'react';
 
 export const StreamPanel = () => {
@@ -25,60 +27,44 @@ export const StreamPanel = () => {
         return streamInfo.boxArt.replace('{width}', width).replace('{height}', height);
       }
 
-      if (!isLoaded) {
-        const largeSpinner = {
-            width: `3rem`,
-            height: `3rem`,
-        };
 
-        return (
-            <div className="text-center">
-                <br/>
-                <div className="spinner-border" style={largeSpinner} role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>
-            </div>
-        )
-      } else { //realistically doesnt need a status check, just do it earlier after state is set and make some constants to be used
-          if (streamInfo.status === 'online') {    //need to call /stream endpoint or read from chrome storage
-            return (
-                <div className="col-md-6 col-sm-12">
-                    <div id="liveSection">
-                        <div className="panel row g-0 rounded mb-2 overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
-                            <div className="col p-4 d-flex flex-column position-static">
-                                <h3 id="statusText" className="mb-0">LIVE</h3>
-                                <p id="streamTitle" className="card-text mb-auto">{streamInfo.title}</p>
-                                <a id="watchButton" className="btn" style={{backgroundColor: "#6441a5", color: "white" }} href="https://twitch.tv/esfandtv" target="_blank" rel="noopener noreferrer">
-                                    Watch Live On Twitch
-                                </a>
-                            </div>
-                            <div className="col-auto">
-                                <img id="sectionImage" width="144" height="192" src={buildImageUrl("144", "192")}/>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
-                )
-          } else {
-            return (
-                <div className="col-md-6 col-sm-12">
-                    <div id="offlineSection">
-                        <div className="panel row g-0 rounded mb-2 overflow-hidden flex-md-row shadow-sm h-md-250 position-relative">
-                            <div className="col p-4 d-flex flex-column position-static">
-                                <h3 id="statusText-offline" className="mb-0">OFFLINE</h3>          
-                                <p id="streamTitle" className="card-text mb-auto">{streamInfo.title}</p>
-                                <a id="watchButton" className="btn" style={{backgroundColor: "#6441a5", color: "white" }} href="https://twitch.tv/esfandtv" target="_blank" rel="noopener noreferrer">
-                                    Visit Channel
-                                </a>
-                            </div>
-                            <div className="col-auto">
-                                <img id="sectionImage" width="144" height="192" src={buildImageUrl("144", "192")}/>
-                            </div>
-                        </div>
-                    </div>   
-                </div>
-                )
-          }
-          
-      }
+      return (
+          <Grid container
+          width={'100%'}
+          spacing={0}>
+              <Grid item xs={8}>
+                <Box
+                    component={'ul'}
+                    display={'flex'}
+                    sx={{marginLeft:'14px', p: 0}}
+                    width={'100%'}
+                >
+                    <Box component={ListItem} disableGutters width={'auto'} sx={{p: 0}}>
+                        <ListItemAvatar sx={{}}>
+                            <Avatar
+                            src={'/images/esfand_icon128.png'}
+                            sx={{ width: 56, height: 56, border:'2px solid #6441A5'}}
+                            />
+                        </ListItemAvatar>
+                        <ListItemText
+                            sx={{ml:'15px'}}
+                            primary={`${streamInfo.status} ${streamInfo.category}`}
+                            primaryTypographyProps={{sx:{}}}
+                            secondary={streamInfo.title}
+                            secondaryTypographyProps={{sx:{fontSize:'12px', lineHeight: 1, color: "white"}}}
+                        />
+                    </Box>
+                </Box>
+              </Grid>
+              <Grid
+              container 
+                item 
+                xs={4}
+                direction="column"
+                justifyContent="center"
+                alignItems="center">
+                <Button variant="contained" size="small" sx={{height:28, width:115, backgroundColor:"rgb(100, 65, 165)", p:1}}>Watch Live</Button>
+              </Grid>
+          </Grid>  
+      )
 }

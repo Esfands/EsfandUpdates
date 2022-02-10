@@ -1,5 +1,6 @@
 import {useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
+import { Avatar, Box, Button, Card, CardActions, CardContent, Grid, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 
 export const TwitterPanel = () => {
 
@@ -26,30 +27,26 @@ export const TwitterPanel = () => {
 
     }, []);
 
-    if (!isLoaded) {
-        return (
-            <div className="col-md-6 col-sm-12">
-            <div className="panel row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative h-100">
-              <div className="col p-4 d-flex flex-column position-static">
-                <strong id="latestTweet" className="d-inline-block mb-1">Loading tweet...</strong>
-              </div>
-            </div>
-          </div>
-        )
+    if(isLoaded) {
+      return (
+        <Grid 
+            container
+            alignItems="center"
+            justifyContent="center"
+            sx={{pt:3}}
+          >
+            <Card sx={{ border: '1px solid #3A4650', position: 'relative',  width:398, backgroundColor:'#15202B' }}>
+              <CardContent>
+              <Typography sx={{ fontSize: 14, color:'white' }} gutterBottom>
+                {tweet[0].text}
+              </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+      )
     } else {
-        return (
-            <div className="col-md-6 col-sm-12">
-            <div className="panel row g-0 rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative h-100">
-              <div className="col p-4 d-flex flex-column position-static">
-                <strong id="latestTweet" className="d-inline-block mb-1" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(urlify(tweet[0].text))}}></strong>
-                <div>
-                  <a id="twitterLink" style={{float:"right"}} href="https://twitter.com/esfandtv" target="_blank" rel="noopener noreferrer"><i className="fas fa-external-link-alt"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        )
+      return <></>
     }
-
+  
     
 }
