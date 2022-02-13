@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Card, CardMedia, Grid} from "@mui/material";
 import { useEffect, useState } from "react";
 
 export const YoutubePanel = () => {
@@ -7,10 +7,10 @@ export const YoutubePanel = () => {
     const [isLoaded, setLoaded] = useState(false);
     
     useEffect(() => {
-      fetch("https://api.onlyfands.net/info", {method: 'GET', mode: 'cors'})
+      fetch("https://api.onlyfands.net/videos", {method: 'GET', mode: 'cors'})
             .then(response => response.json())
             .then(result => {
-                setVideoInfo(result.Data);
+                setVideoInfo(result.data);
                 setLoaded(true);
             },
             (error) => {
@@ -29,11 +29,11 @@ export const YoutubePanel = () => {
             <Card sx={{borderRadius: 10, border: '4px solid #3A4650', position: 'relative', height:210, width:398 }}>
               <CardMedia
                 component="img"
-                image="https://i.ytimg.com/vi/S22FB_hFCJA/mqdefault.jpg"
+                image={videoInfo.items[0].snippet.thumbnails.medium.url}
                 sx={{overflow:"hidden", maxHeight:360}}
               />
               <div style={{position: 'absolute', bottom:'0', color:'white', background: 'rgb(0,0,0,0.3)'}}>
-                <div style={{position:'relative',  top:'0', left:'25px'}}>{videoInfo[0].vidTitle}</div>
+                <div style={{position:'relative',  top:'0', left:'25px'}}>{videoInfo.items[0].snippet.title}</div>
               </div>
             </Card>
           </Grid>
@@ -41,7 +41,14 @@ export const YoutubePanel = () => {
       )
     } else {
       return (
-        <></>
+        <Grid 
+          container
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Card sx={{borderRadius: 10, border: '4px solid #3A4650', position: 'relative', height:210, width:398 }}>
+          </Card>
+        </Grid>
       )
     }
     
