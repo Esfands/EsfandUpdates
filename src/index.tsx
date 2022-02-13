@@ -3,19 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { Updates } from './components/Updates';
-import { Options } from './components/Options';
 
 ReactDOM.render(
   <React.StrictMode>
-     <MemoryRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/socials" element={<Updates />} />
-        <Route path="/options" element={<Options />} />
-      </Routes>
-    </MemoryRouter>
+    <App />
   </React.StrictMode>, 
   document.getElementById('root')
 );
