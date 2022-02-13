@@ -14,17 +14,3 @@ a {
     color: white !important;
     text-decoration: none;
 }
-
-a:hover {
-    color: #970e0f !important;
-}
-
-#settingsBtn {
-    border: none;
-    background: none;
-    color: white;
-}
-
-#settingsBtn:hover {
-    color: #970e0f;
-}

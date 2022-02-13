@@ -1,4 +1,4 @@
-import { Box, Avatar, Grid, ListItemAvatar, ListItemText, ListItem, Button, Typography, styled } from '@mui/material';
+import { Box, Avatar, Grid, ListItemAvatar, ListItemText, ListItem, Button, Typography, styled, Link } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -7,7 +7,8 @@ const StyledButton = styled(Button)(({ theme }) => ({
     p:1,
     backgroundColor:'rgb(100, 65, 165)',
     '&:hover': {
-        backgroundColor: 'rgb(91 60 149)'
+        backgroundColor: 'rgb(91 60 149)',
+        color: 'white'
     },
 }));
 
@@ -123,7 +124,9 @@ export const StreamPanel = () => {
                   direction="column"
                   justifyContent="center"
                   alignItems="center">
-                  <StyledButton variant="contained" href={getButtonUrl()} size="small" sx={{height:28, width:115, backgroundColor:"rgb(100, 65, 165)", p:1}}>{getButtonText()}</StyledButton>
+                  <Link href="https://twitch.tv/esfandtv" target="_blank" rel="noopener noreferrer" underline='none'>
+                    <StyledButton variant="contained" size="small" sx={{height:28, width:115, backgroundColor:"rgb(100, 65, 165)", p:1}}>{getButtonText()}</StyledButton>
+                  </Link>
                 </Grid>
             </Grid>  
         )

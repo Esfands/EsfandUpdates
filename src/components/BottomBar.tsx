@@ -1,3 +1,4 @@
+/* global chrome */
 import { Box, Button, Grid, IconButton, Link } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitch, faTwitter, faYoutube, faDiscord, faInstagram, faReddit } from "@fortawesome/free-brands-svg-icons";
@@ -25,6 +26,15 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 
 export const BottomBar = () => {
+
+    function openOptionsPage() {
+        if (chrome.runtime.openOptionsPage) {
+            chrome.runtime.openOptionsPage();
+        } else {
+            window.open(chrome.runtime.getURL('options.html'));
+        }
+    }
+
     return (
         <Grid container sx={{ paddingTop: 5 }}>
             <Grid item xs={8}>
@@ -32,32 +42,32 @@ export const BottomBar = () => {
                     display={'flex'}
                     sx={{marginLeft:'14px', p: 0}}
                 >
-                    <Link href="https://twitch.tv/esfandtv">
+                    <Link href="https://twitch.tv/esfandtv" target="_blank" rel="noopener noreferrer">
                         <StyledIconButton>
                             <FontAwesomeIcon icon={faTwitch}/>
                         </StyledIconButton>
                     </Link>
-                    <Link href="https://twitter.com/esfandtv">
+                    <Link href="https://twitter.com/esfandtv" target="_blank" rel="noopener noreferrer">
                         <StyledIconButton>
                             <FontAwesomeIcon icon={faTwitter}/>
                         </StyledIconButton>
                     </Link>
-                    <Link href="https://youtube.com/esfandtv">
+                    <Link href="https://youtube.com/esfandtv" target="_blank" rel="noopener noreferrer">
                         <StyledIconButton>
                             <FontAwesomeIcon icon={faYoutube}/>
                         </StyledIconButton>
                     </Link>
-                    <Link href="https://discord.gg/esfandtv">
+                    <Link href="https://discord.gg/esfandtv" target="_blank" rel="noopener noreferrer">
                         <StyledIconButton>
                             <FontAwesomeIcon icon={faDiscord}/>
                         </StyledIconButton>
                     </Link>
-                    <Link href="https://instagram.com/esfandtv">
+                    <Link href="https://instagram.com/esfandtv" target="_blank" rel="noopener noreferrer">
                         <StyledIconButton>
                             <FontAwesomeIcon icon={faInstagram}/>
                         </StyledIconButton>
                     </Link>
-                    <Link href="https://reddit.com/r/esfandtv">
+                    <Link href="https://reddit.com/r/esfandtv" target="_blank" rel="noopener noreferrer">
                         <StyledIconButton>
                             <FontAwesomeIcon icon={faReddit}/>
                         </StyledIconButton>
@@ -68,7 +78,7 @@ export const BottomBar = () => {
                 <Box
                     display={'flex'}
                     sx={{marginLeft:'48px', p: 0}}>
-                    <StyledButton variant="outlined" size="small">Settings</StyledButton>
+                    <StyledButton variant="outlined" size="small" id="settingsBtn" onClick={openOptionsPage}>Settings</StyledButton>
                 </Box>
                 
             </Grid>
