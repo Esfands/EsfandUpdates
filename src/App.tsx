@@ -4,7 +4,7 @@ import { StreamPanel } from './components/StreamPanel';
 import { YoutubePanel } from './components/YoutubePanel';
 import { TwitterPanel } from './components/TwitterPanel';
 import { BottomBar } from './components/BottomBar';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 
 
