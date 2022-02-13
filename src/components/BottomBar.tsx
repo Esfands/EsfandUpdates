@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton } from "@mui/material";
+import { Box, Button, Grid, IconButton, Link } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitch, faTwitter, faYoutube, faDiscord, faInstagram, faReddit } from "@fortawesome/free-brands-svg-icons";
 import { styled } from '@mui/material/styles';
@@ -32,24 +32,36 @@ export const BottomBar = () => {
                     display={'flex'}
                     sx={{marginLeft:'14px', p: 0}}
                 >
-                    <StyledIconButton>
-                        <FontAwesomeIcon icon={faTwitch}/>
-                    </StyledIconButton>
-                    <StyledIconButton>
-                        <FontAwesomeIcon icon={faTwitter}/>
-                    </StyledIconButton>
-                    <StyledIconButton>
-                        <FontAwesomeIcon icon={faYoutube}/>
-                    </StyledIconButton>
-                    <StyledIconButton>
-                        <FontAwesomeIcon icon={faDiscord}/>
-                    </StyledIconButton>
-                    <StyledIconButton>
-                        <FontAwesomeIcon icon={faInstagram}/>
-                    </StyledIconButton>
-                    <StyledIconButton>
-                        <FontAwesomeIcon icon={faReddit}/>
-                    </StyledIconButton>
+                    <Link href="https://twitch.tv/esfandtv">
+                        <StyledIconButton>
+                            <FontAwesomeIcon icon={faTwitch}/>
+                        </StyledIconButton>
+                    </Link>
+                    <Link href="https://twitter.com/esfandtv">
+                        <StyledIconButton>
+                            <FontAwesomeIcon icon={faTwitter}/>
+                        </StyledIconButton>
+                    </Link>
+                    <Link href="https://youtube.com/esfandtv">
+                        <StyledIconButton>
+                            <FontAwesomeIcon icon={faYoutube}/>
+                        </StyledIconButton>
+                    </Link>
+                    <Link href="https://discord.gg/esfandtv">
+                        <StyledIconButton>
+                            <FontAwesomeIcon icon={faDiscord}/>
+                        </StyledIconButton>
+                    </Link>
+                    <Link href="https://instagram.com/esfandtv">
+                        <StyledIconButton>
+                            <FontAwesomeIcon icon={faInstagram}/>
+                        </StyledIconButton>
+                    </Link>
+                    <Link href="https://reddit.com/r/esfandtv">
+                        <StyledIconButton>
+                            <FontAwesomeIcon icon={faReddit}/>
+                        </StyledIconButton>
+                    </Link>
                 </Box>
             </Grid>
             <Grid item xs={4} justifyContent="flex-end" alignContent="flex-end">
