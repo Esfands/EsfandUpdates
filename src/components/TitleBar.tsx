@@ -11,9 +11,9 @@ const StyledToolBar = styled(Toolbar)(({ theme }) => ({
 
 export const TitleBar = () => {
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <StyledToolBar>
+        <Box sx={{ flexGrow: 1}}>
+            <AppBar position="static" sx={{p:0}}>
+                <StyledToolBar disableGutters>
                     <Typography variant="overline"  component="div"  align="left" sx={{ flexGrow: 1}}>
                         ESFAND UPDATES
                     </Typography>
