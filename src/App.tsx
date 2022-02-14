@@ -20,7 +20,7 @@ function App() {
       .then(result => {
         const body = document.querySelector('body');
         if (body != null) {
-          body.style.background = `linear-gradient(0deg, rgba(16,19,22,1) 0%, rgba(39,38,44,0) 100%), url(${buildImageUrl(result.data.boxArt, '410', '500')}`;
+          body.style.background = `linear-gradient(0deg, rgba(16,19,22,1) 0%, rgba(39,38,44,0) 100%), url(${buildImageUrl(result.data.boxArt, '500', '410')}`;
         }  
       });
   },[]);
