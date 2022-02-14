@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
-import { Card, CardMedia, Grid, Link} from "@mui/material";
+import { Card, CardMedia, Grid, Link, Typography} from "@mui/material";
 import { useEffect, useState } from "react";
 
 export const YoutubePanel = () => {
@@ -42,7 +42,11 @@ export const YoutubePanel = () => {
                   sx={{overflow:"hidden", maxHeight:360}}
                 />
                 <div style={{position: 'absolute', bottom:'0', color:'white', background: 'rgb(0,0,0,0.7)', width:'100%'}}>
-                  <div style={{position:'relative',  top:'0', left:'25px'}}>{getDecodedTitle()}</div>
+                  <Typography
+                    sx={{position: 'relative', top: 0, left:'25px', width: '90%', fontSize:'14px'}}
+                  >
+                    {getDecodedTitle()}
+                  </Typography>
                 </div>
                 <div style={{position: 'absolute', left:'50%', top:'50%', color:'rgb(196, 48, 43, 1)', transform: 'translate(-50%, -50%)', WebkitTransform: 'translate(-50%, -50%)'}}>
                   <FontAwesomeIcon icon={faYoutube} size="5x" />

@@ -96,15 +96,15 @@ export const StreamPanel = () => {
                               primary={
                                   <React.Fragment>
                                       <Typography
-                                        sx={{pb:0, mb:0}}
-                                        variant="body1"
+                                        sx={{pb:0, mb:0, fontWeight: 'bolder'}}
+                                        variant="body2"
                                         alignItems="center"
                                         alignContent="center"
                                       >
                                         {getStatusText()}
                                       </Typography>
                                       <Typography
-                                        sx={{ color: '#636E77', p:0, fontSize:13}}
+                                        sx={{ color: 'rgb(133, 146, 157)', p: 0, fontSize: 14, fontWeight: 'bolder'}}
                                         variant="body2"
                                       >
                                         {getGameTitle()} 
