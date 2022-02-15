@@ -1,0 +1,16 @@
+body, section {	
+	width: 540px;
+	height: 400px;
+    color: white;
+    background-color: #101316;
+    overflow: auto;
+    margin:auto;
+}
+.panel {
+    background-color: #1b2126 !important;
+}
+
+a {
+    color: white !important;
+    text-decoration: none;
+}
