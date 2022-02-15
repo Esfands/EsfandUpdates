@@ -73,87 +73,82 @@ export const StreamPanel = () => {
         return '';
     }
 
-    if (isLoaded) {
-        return (
-            <Grid container width={'100%'} spacing={0}>
-                <Grid item xs={8}>
-                    <Box component={'ul'} display={'flex'} sx={{ marginLeft: '14px', p: 0 }} width={'100%'}>
-                        <Box component={ListItem} disableGutters width={'auto'} sx={{ p: 0 }}>
-                            <ListItemAvatar sx={{}}>
-                                <Avatar
-                                    src={'/images/esfand_icon128.png'}
-                                    sx={{
-                                        width: 56,
-                                        height: 56,
-                                        border: `2px solid ${getBorderColor()}`,
-                                    }}
-                                />
-                            </ListItemAvatar>
-                            <ListItemText
-                                sx={{ ml: '15px' }}
-                                primary={
-                                    <React.Fragment>
-                                        <Typography
-                                            sx={{
-                                                pb: 0,
-                                                mb: 0,
-                                                fontWeight: 'bolder',
-                                            }}
-                                            variant="body2"
-                                            alignItems="center"
-                                            alignContent="center"
-                                        >
-                                            {getStatusText()}
-                                        </Typography>
-                                        <Typography
-                                            sx={{
-                                                color: 'rgb(133, 146, 157)',
-                                                p: 0,
-                                                fontSize: 14,
-                                                fontWeight: 'bolder',
-                                            }}
-                                            variant="body2"
-                                        >
-                                            {getGameTitle()}
-                                        </Typography>
-                                    </React.Fragment>
-                                }
-                                secondary={getStreamTitle()}
-                                secondaryTypographyProps={{
-                                    sx: {
-                                        fontSize: '12px',
-                                        lineHeight: 1,
-                                        color: 'white',
-                                    },
-                                }}
-                            />
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid container item xs={4} direction="column" justifyContent="center" alignItems="center">
-                    <Link
-                        href="https://twitch.tv/esfandtv"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        underline="none"
-                    >
-                        <StyledButton
-                            variant="contained"
-                            size="small"
-                            sx={{
-                                height: 28,
-                                width: 115,
-                                backgroundColor: 'rgb(100, 65, 165)',
-                                p: 1,
-                            }}
-                        >
-                            {getButtonText()}
-                        </StyledButton>
-                    </Link>
-                </Grid>
-            </Grid>
-        );
-    } else {
+    if (!isLoaded) {
         return <></>;
     }
+
+    return (
+        <Grid container width={'100%'} spacing={0}>
+            <Grid item xs={8}>
+                <Box component={'ul'} display={'flex'} sx={{ marginLeft: '14px', p: 0 }} width={'100%'}>
+                    <Box component={ListItem} disableGutters width={'auto'} sx={{ p: 0 }}>
+                        <ListItemAvatar sx={{}}>
+                            <Avatar
+                                src={'/images/esfand_icon128.png'}
+                                sx={{
+                                    width: 56,
+                                    height: 56,
+                                    border: `2px solid ${getBorderColor()}`,
+                                }}
+                            />
+                        </ListItemAvatar>
+                        <ListItemText
+                            sx={{ ml: '15px' }}
+                            primary={
+                                <React.Fragment>
+                                    <Typography
+                                        sx={{
+                                            pb: 0,
+                                            mb: 0,
+                                            fontWeight: 'bolder',
+                                        }}
+                                        variant="body2"
+                                        alignItems="center"
+                                        alignContent="center"
+                                    >
+                                        {getStatusText()}
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            color: 'rgb(133, 146, 157)',
+                                            p: 0,
+                                            fontSize: 14,
+                                            fontWeight: 'bolder',
+                                        }}
+                                        variant="body2"
+                                    >
+                                        {getGameTitle()}
+                                    </Typography>
+                                </React.Fragment>
+                            }
+                            secondary={getStreamTitle()}
+                            secondaryTypographyProps={{
+                                sx: {
+                                    fontSize: '12px',
+                                    lineHeight: 1,
+                                    color: 'white',
+                                },
+                            }}
+                        />
+                    </Box>
+                </Box>
+            </Grid>
+            <Grid container item xs={4} direction="column" justifyContent="center" alignItems="center">
+                <Link href="https://twitch.tv/esfandtv" target="_blank" rel="noopener noreferrer" underline="none">
+                    <StyledButton
+                        variant="contained"
+                        size="small"
+                        sx={{
+                            height: 28,
+                            width: 115,
+                            backgroundColor: 'rgb(100, 65, 165)',
+                            p: 1,
+                        }}
+                    >
+                        {getButtonText()}
+                    </StyledButton>
+                </Link>
+            </Grid>
+        </Grid>
+    );
 };
