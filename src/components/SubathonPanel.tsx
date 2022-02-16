@@ -1,5 +1,1 @@
-export const SubathonPanel = () => {
-    return (
-        <></>
-    )
-}
+export const SubathonPanel = () => <></>;
