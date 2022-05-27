@@ -10,7 +10,7 @@ function App() {
         url.replace('{width}', width).replace('{height}', height);
 
     useEffect(() => {
-        fetch('https://api.onlyfands.net/stream', {
+        fetch('https://cdn.otkdata.com/api/stream/esfandtv', {
             method: 'GET',
             mode: 'cors',
         })
@@ -19,7 +19,7 @@ function App() {
                 const body = document.querySelector('body');
                 if (body != null) {
                     body.style.background = `linear-gradient(0deg, rgba(16,19,22,1) 0%, rgba(39,38,44,0) 100%), url(${buildImageUrl(
-                        result.data.boxArt,
+                        result.data[0].twitch.boxArt,
                         '500',
                         '410'
                     )}`;

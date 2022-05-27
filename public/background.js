@@ -1,7 +1,6 @@
 chrome.runtime.onInstalled.addListener(() => {
-    addDefaultStorageData();
-    updateData(true);
-    chrome.alarms.create('statusCheck', { periodInMinutes: 1 });
+    performVersionCheck();
+    chrome.alarms.create('statusCheck', { periodInMinutes: 2 });
   });
   
   chrome.notifications.onClicked.addListener(async function(notificationId) {
@@ -10,6 +9,10 @@ chrome.runtime.onInstalled.addListener(() => {
       const streamData = await getLocalStreamData();
       const videoId = streamData.videoId;
       url = `https://youtube.com/watch?v=${videoId}`
+    } else if (notificationId === 'announcement') {
+      const apiData = await getStreamData();
+      const announcementUrl = apiData.announcementLink;
+      url = announcementUrl;
     } else {
       url = 'https://twitch.tv/esfandtv'
     }
@@ -25,50 +28,60 @@ chrome.runtime.onInstalled.addListener(() => {
   
   async function updateData(firstLoad) {
     const responseData = await getStreamData();
-    const status = responseData.status;
-    const title = responseData.title;
-    const category = responseData.category;
-    const videoId = responseData.videoId;
-    const videoTitle = responseData.videoTitle;
-    
+    const twitchData = responseData.twitch;
+    const youtubeData = responseData.video;
+    const announcementData = responseData.announcement;
+
     const data = await getLocalStreamData();
-    const currStatus = data.status;
+    const currLive = data.live;
     const currCategory = data.category;
     const currTitle = data.title;
     const currVideoId = data.videoId;
+    const announcementIds = data.announcementIds;
     
     const notificationData = await getLocalNotificationsData();
 
-    if (currStatus.toLowerCase() === 'offline' && status.toLowerCase() === 'online') {
+    if (announcementData.msgId !== "0" && !announcementIds.includes(announcementData.msgId)) {
+      chrome.notifications.create('announcement', {
+        iconUrl: '/images/esfand_icon128.png',
+          message: `${announcementData.message}`,
+          title: 'ESFAND ANNOUNCEMENT',
+          type: 'basic'
+      });
+      
+      await updateAnnouncements(announcementData.msgId);
+    }
+
+    if (!currLive && twitchData.live) {
       const showLiveNotification = notificationData.live;
       if (showLiveNotification) {  
         chrome.notifications.create({
           iconUrl: '/images/esfand_icon128.png',
-          message: `${title}`,
+          message: `${twitchData.title}`,
           title: 'Esfand is live!',
           type: 'basic'
         });
       };
   
-      await updateStatus(status);
-      await updateCategory(category);
-      await updateTitle(title);
+      await updateStatus(twitchData.live);
+      await updateCategory(twitchData.category);
+      await updateTitle(twitchData.title);
   
       return;
     } else if (firstLoad) {
-      await updateStatus(status);
-      await updateCategory(category);
-      await updateTitle(title);
-      await updateVideo(videoId, videoTitle);
+      await updateStatus(twitchData.live);
+      await updateCategory(twitchData.category);
+      await updateTitle(twitchData.title);
+      await updateVideo(youtubeData.id, youtubeData.title);
     }
   
-    if (videoId !== currVideoId) {
+    if (youtubeData.id !== currVideoId) {
       const showYoutubeNotification = notificationData.video;
-      await updateVideo(videoId, videoTitle);
+      await updateVideo(youtubeData.id, youtubeData.title);
       if (showYoutubeNotification) {
         chrome.notifications.create('video', {
           iconUrl: '/images/esfand_icon128.png',
-          message: `${videoTitle}`,
+          message: `${youtubeData.title}`,
           title: 'New Esfand Youtube Video!',
           type: 'basic'
         });
@@ -76,25 +89,25 @@ chrome.runtime.onInstalled.addListener(() => {
       return;
     }
   
-    if (currStatus.toLowerCase() === 'offline' && !firstLoad) { return; }
+    if (!currLive && !firstLoad) { return; }
   
-    if (status.toLowerCase() === 'offline') {
-      await updateStatus(status);
+    if (!twitchData.live) {
+      await updateStatus(twitchData.live);
       return;
     }
 
-    if (currTitle.toLowerCase() !== title.toLowerCase()) {
-      await updateTitle(title);
+    if (currTitle.toLowerCase() !== twitchData.title.toLowerCase()) {
+      await updateTitle(twitchData.title);
     }
   
-    if (currCategory.toLowerCase() !== category.toLowerCase()) {
-      await updateCategory(category);
+    if (currCategory.toLowerCase() !== twitchData.category.toLowerCase()) {
+      await updateCategory(twitchData.category);
       
       if (!notificationData.category) { return };
   
       chrome.notifications.create({
         iconUrl: '/images/esfand_icon128.png',
-        message: `Esfand switched to ${category}`,
+        message: `Esfand switched to ${twitchData.category}`,
         title: 'Esfand Updates',
         type: 'basic'
       });
@@ -102,7 +115,7 @@ chrome.runtime.onInstalled.addListener(() => {
   }
   
   async function getStreamData() {
-    const res = await fetch("https://api.onlyfands.net/stream", {
+    const res = await fetch('https://cdn.otkdata.com/api/stream/esfandtv', {
         method: 'GET',
         headers: {
             'content-type': 'application/json;'
@@ -112,7 +125,7 @@ chrome.runtime.onInstalled.addListener(() => {
   
     const {data} = await res.json();
     if (res.ok) {
-        return data;
+        return data[0];
     } else {
         return Promise.reject('There was an error in retrieving the data.');
     }
@@ -120,11 +133,12 @@ chrome.runtime.onInstalled.addListener(() => {
   
   function addDefaultStorageData() {
     chrome.storage.local.set({'streamData': {
-      'status': 'offline',
+      'live': false,
       'category': '',
       'title': '',
       'videoId': '',
-      'videoTitle': ''
+      'videoTitle': '',
+      'announcementIds': []
     }});
   
     chrome.storage.local.set({'notifications': {
@@ -141,9 +155,10 @@ chrome.runtime.onInstalled.addListener(() => {
           resolve({
             title: "",
             category: "",
-            status: "offline",
+            live: false,
             videoId: "",
-            videoTitle: ""
+            videoTitle: "",
+            announcementIds: []
           });
         } else {
           resolve(result.streamData);
@@ -168,9 +183,9 @@ chrome.runtime.onInstalled.addListener(() => {
     });
   }
   
-  async function updateStatus(status) {
+  async function updateStatus(live) {
     const localStreamData = await getLocalStreamData();
-    localStreamData.status = status;
+    localStreamData.live = live;
     saveStreamData(localStreamData);
   }
   
@@ -187,12 +202,35 @@ chrome.runtime.onInstalled.addListener(() => {
   }
 
   async function updateVideo(videoId, videoTitle) {
-    const localStreamData = await getLocalStreamData()
+    const localStreamData = await getLocalStreamData();
     localStreamData.videoId = videoId;
     localStreamData.videoTitle = videoTitle;
+    saveStreamData(localStreamData);
+  }
+
+  async function updateAnnouncements(announcementId) {
+    const localStreamData = await getLocalStreamData();
+    localStreamData.announcementIds.push(announcementId);
     saveStreamData(localStreamData);
   }
   
   function saveStreamData(streamData) {
     chrome.storage.local.set({'streamData': streamData});
+  }
+
+  async function getLocalVersion() {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get(['version'], (result) => {
+          resolve(result);
+      });
+    });
+  }
+
+  async function performVersionCheck() {
+    const currentVersion = await getLocalVersion();
+    if (Object.keys(currentVersion).length === 0) {
+      chrome.storage.local.set({'version': '1.5.0'});
+      addDefaultStorageData();
+      updateData(true);
+    }
   }

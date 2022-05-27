@@ -8,14 +8,14 @@ export const YoutubePanel = () => {
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        fetch('https://api.onlyfands.net/info', {
+        fetch('https://cdn.otkdata.com/api/videos/esfandtv?count=1', {
             method: 'GET',
             mode: 'cors',
         })
             .then((response) => response.json())
             .then(
                 (result) => {
-                    setVideoInfo(result.Data[0]);
+                    setVideoInfo(result.data[0].videoData.items[0].snippet);
                     setLoaded(true);
                 },
                 () => setLoaded(true)
@@ -23,7 +23,7 @@ export const YoutubePanel = () => {
     }, []);
 
     const getDecodedTitle = () =>
-        videoInfo.vidTitle.replace(/&#(\d+);/g, (match: any, dec: number) => String.fromCharCode(dec));
+        videoInfo.title.replace(/&#(\d+);/g, (match: any, dec: number) => String.fromCharCode(dec));
 
     if (!isLoaded) {
         return (
@@ -44,7 +44,7 @@ export const YoutubePanel = () => {
     return (
         <Grid container alignItems="center" justifyContent="center">
             <Link
-                href={`https://youtube.com/watch?v=${videoInfo.vidId}`}
+                href={`https://youtube.com/watch?v=${videoInfo.resourceId.videoId}`}
                 target="_blank"
                 rel="noopener noreferrer"
             >
@@ -59,7 +59,7 @@ export const YoutubePanel = () => {
                 >
                     <CardMedia
                         component="img"
-                        image={videoInfo.vidArt.url}
+                        image={videoInfo.thumbnails.medium.url}
                         sx={{ overflow: 'hidden', maxHeight: 360 }}
                     />
                     <div

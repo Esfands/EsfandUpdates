@@ -14,14 +14,14 @@ export const TwitterPanel = () => {
     }
 
     useEffect(() => {
-        fetch('https://api.onlyfands.net/posts', {
+        fetch('https://cdn.otkdata.com/api/stream/esfandtv', {
             method: 'GET',
             mode: 'cors',
         })
             .then((response) => response.json())
             .then(
                 (result) => {
-                    setTweet(result.data);
+                    setTweet(result.data[0].twitter);
                     setIsLoaded(true);
                 },
                 (error) => setIsLoaded(true)
@@ -60,12 +60,12 @@ export const TwitterPanel = () => {
                     <Typography sx={{ fontSize: 14, color: 'white' }} gutterBottom>
                         <div
                             dangerouslySetInnerHTML={{
-                                __html: DOMPurify.sanitize(urlify(tweet[0].text)),
+                                __html: DOMPurify.sanitize(urlify(tweet.text)),
                             }}
                         ></div>
                     </Typography>
                     <Box>
-                        <Link href={tweet[0].url} target="_blank" rel="noopener noreferrer">
+                        <Link href={tweet.url} target="_blank" rel="noopener noreferrer">
                             <FontAwesomeIcon icon={faExternalLinkAlt} style={{ float: 'right' }} />
                         </Link>
                     </Box>

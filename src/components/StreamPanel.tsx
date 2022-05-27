@@ -28,14 +28,14 @@ export const StreamPanel = () => {
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        fetch('https://api.onlyfands.net/stream', {
+        fetch('https://cdn.otkdata.com/api/stream/esfandtv', {
             method: 'GET',
             mode: 'cors',
         })
             .then((response) => response.json())
             .then(
                 (result) => {
-                    setStreamInfo(result.data);
+                    setStreamInfo(result.data[0]);
                     setLoaded(true);
                 },
                 (error) => {
@@ -45,30 +45,32 @@ export const StreamPanel = () => {
     }, []);
 
     function getBorderColor() {
-        return streamInfo.status === 'offline' ? '#970e0f' : '#6441A5';
+        return streamInfo.twitch.live ? '#6441A5' : '#970e0f';
     }
 
     function getStatusText() {
-        return streamInfo.status === 'offline' ? 'OFFLINE' : 'LIVE';
+        return streamInfo.twitch.live ? 'LIVE' : 'OFFLINE';
     }
 
     function getButtonText() {
-        return streamInfo.status === 'offline' ? 'Watch VODS' : 'Watch Live';
+        return streamInfo.twitch.live ? 'Watch Live' : 'Watch VODS';
     }
 
     function getButtonUrl() {
-        return streamInfo.status === 'offline'
+        return streamInfo.twitch.live
             ? 'https://www.twitch.tv/esfandtv/videos?filter=archives&sort=time'
             : 'https://www.twitch.tv/esfandtv/';
     }
 
     function getGameTitle() {
-        return streamInfo != null || streamInfo !== undefined ? streamInfo.category.substring(0, 20) : '';
+        return streamInfo != null || streamInfo !== undefined ? streamInfo.twitch.category.substring(0, 20) : '';
     }
 
     function getStreamTitle() {
         if (streamInfo != null || streamInfo !== undefined) {
-            return streamInfo.title.length > 68 ? `${streamInfo.title.substring(0, 68)}...` : streamInfo.title;
+            return streamInfo.twitch.title.length > 68
+                ? `${streamInfo.twitch.title.substring(0, 68)}...`
+                : streamInfo.twitch.title;
         }
         return '';
     }
@@ -134,7 +136,7 @@ export const StreamPanel = () => {
                 </Box>
             </Grid>
             <Grid container item xs={4} direction="column" justifyContent="center" alignItems="center">
-                <Link href="https://twitch.tv/esfandtv" target="_blank" rel="noopener noreferrer" underline="none">
+                <Link href={getButtonUrl()} target="_blank" rel="noopener noreferrer" underline="none">
                     <StyledButton
                         variant="contained"
                         size="small"
