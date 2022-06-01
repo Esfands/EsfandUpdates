@@ -10,7 +10,15 @@ export const TwitterPanel = () => {
 
     function urlify(text: string) {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
-        return text.replace(urlRegex, (url) => '<a style="color:#970e0f" href="' + url + '">' + url + '</a>');
+        return text.replace(
+            urlRegex,
+            (url) =>
+                '<a style="color:#970e0f" target="_blank" href="' +
+                url +
+                '" rel="noopener noreferrer">' +
+                url +
+                '</a>'
+        );
     }
 
     useEffect(() => {

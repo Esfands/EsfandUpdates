@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(() => {
     performVersionCheck();
-    chrome.alarms.create('statusCheck', { periodInMinutes: 2 });
+    chrome.alarms.create('statusCheck', { periodInMinutes: 1 });
   });
   
   chrome.notifications.onClicked.addListener(async function(notificationId) {
@@ -229,7 +229,7 @@ chrome.runtime.onInstalled.addListener(() => {
   async function performVersionCheck() {
     const currentVersion = await getLocalVersion();
     if (Object.keys(currentVersion).length === 0) {
-      chrome.storage.local.set({'version': '1.5.0'});
+      chrome.storage.local.set({'version': '1.4.2'});
       addDefaultStorageData();
       updateData(true);
     }

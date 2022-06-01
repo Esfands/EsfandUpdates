@@ -57,7 +57,7 @@ export const StreamPanel = () => {
     }
 
     function getButtonUrl() {
-        return streamInfo.twitch.live
+        return !streamInfo.twitch.live
             ? 'https://www.twitch.tv/esfandtv/videos?filter=archives&sort=time'
             : 'https://www.twitch.tv/esfandtv/';
     }
