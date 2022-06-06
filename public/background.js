@@ -41,15 +41,21 @@ chrome.runtime.onInstalled.addListener(() => {
     
     const notificationData = await getLocalNotificationsData();
 
-    if (announcementData.msgId !== "0" && !announcementIds.includes(announcementData.msgId)) {
-      chrome.notifications.create('announcement', {
-        iconUrl: '/images/esfand_icon128.png',
-          message: `${announcementData.message}`,
-          title: 'ESFAND ANNOUNCEMENT',
-          type: 'basic'
-      });
-      
-      await updateAnnouncements(announcementData.msgId);
+    if (responseData.error) return;
+
+    const announcementMsgId = announcementData?.msgId;
+    
+    if (announcementMsgId != null && announcementMsgId !== '' && announcementMsgId !== '0') {
+      if (!announcementIds.includes(announcementData.msgId)) {
+        chrome.notifications.create('announcement', {
+          iconUrl: '/images/esfand_icon128.png',
+            message: `${announcementData.message}`,
+            title: 'ESFAND ANNOUNCEMENT',
+            type: 'basic'
+        });
+        
+        await updateAnnouncements(announcementData.msgId);
+      }
     }
 
     if (!currLive && twitchData.live) {
@@ -75,7 +81,8 @@ chrome.runtime.onInstalled.addListener(() => {
       await updateVideo(youtubeData.id, youtubeData.title);
     }
   
-    if (youtubeData.id !== currVideoId) {
+    const youtubeId = youtubeData?.id;
+    if (youtubeId != null && youtubeId !== '' && youtubeId !== currVideoId) {
       const showYoutubeNotification = notificationData.video;
       await updateVideo(youtubeData.id, youtubeData.title);
       if (showYoutubeNotification) {
@@ -202,6 +209,8 @@ chrome.runtime.onInstalled.addListener(() => {
   }
 
   async function updateVideo(videoId, videoTitle) {
+    if (videoId == null || videoTitle == null || videoTitle === '') return;
+
     const localStreamData = await getLocalStreamData();
     localStreamData.videoId = videoId;
     localStreamData.videoTitle = videoTitle;
@@ -209,6 +218,7 @@ chrome.runtime.onInstalled.addListener(() => {
   }
 
   async function updateAnnouncements(announcementId) {
+    if (announcementId == null) return;
     const localStreamData = await getLocalStreamData();
     localStreamData.announcementIds.push(announcementId);
     saveStreamData(localStreamData);
@@ -228,9 +238,12 @@ chrome.runtime.onInstalled.addListener(() => {
 
   async function performVersionCheck() {
     const currentVersion = await getLocalVersion();
+    console.log(currentVersion);
     if (Object.keys(currentVersion).length === 0) {
-      chrome.storage.local.set({'version': '1.4.2'});
+      chrome.storage.local.set({'version': '1.4.3'});
       addDefaultStorageData();
       updateData(true);
+    } else if (currentVersion !== '1.4.3') {
+      chrome.storage.local.set({'version': '1.4.3'});
     }
   }
