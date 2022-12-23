@@ -1,13 +1,17 @@
 import { TitleBar } from './components/TitleBar';
 import { StreamPanel } from './components/StreamPanel';
-import { YoutubePanel } from './components/YoutubePanel';
-import { TwitterPanel } from './components/TwitterPanel';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { appTheme } from './themes/theme';
+import { Schedule } from './components/Schedule';
 import { BottomBar } from './components/BottomBar';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { NavTab } from './components/NavTab';
 
 function App() {
     const buildImageUrl = (url: string, width: string, height: string) =>
         url.replace('{width}', width).replace('{height}', height);
+
+    const [isOnSchedule, setOnSchedule] = useState(false);
 
     useEffect(() => {
         fetch('https://cdn.otkdata.com/api/stream/esfandtv', {
@@ -27,15 +31,28 @@ function App() {
             });
     }, []);
 
-    return (
-        <div>
-            <TitleBar />
-            <StreamPanel />
-            <YoutubePanel />
-            <TwitterPanel />
-            <BottomBar />
-        </div>
-    );
+    if (!isOnSchedule) {
+        return (
+            <ThemeProvider theme={appTheme}>
+                <CssBaseline enableColorScheme />
+                <div>
+                    <TitleBar />
+                    <StreamPanel />
+                    <NavTab />
+                    <BottomBar />
+                </div>
+            </ThemeProvider>
+        );
+    } else {
+        return (
+            <div>
+                <TitleBar />
+                <StreamPanel />
+                <Schedule />
+                <BottomBar />
+            </div>
+        );
+    }
 }
 
 export default App;

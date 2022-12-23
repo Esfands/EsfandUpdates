@@ -17,7 +17,7 @@ export const TitleBar = () => (
                     ESFAND UPDATES
                 </Typography>
                 <Typography variant="overline" component="div" align="right" sx={{ flexGrow: 1 }}>
-                    v1.4.3
+                    v1.5.0
                 </Typography>
             </StyledToolBar>
         </AppBar>
