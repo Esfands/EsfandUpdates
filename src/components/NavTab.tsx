@@ -21,10 +21,11 @@ function TabPanel(props: TabPanelProps) {
             hidden={value !== index}
             id={`simple-tabpanel-${index}`}
             aria-labelledby={`simple-tab-${index}`}
+            style={{ width: '85%' }}
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 0.5 }}>
+                <Box sx={{ p: 0.5, width: '100%' }}>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -47,7 +48,7 @@ export const NavTab = () => {
     };
 
     return (
-        <Grid container alignItems="center" justifyContent="center" sx={{}}>
+        <Grid container alignItems="center" justifyContent="center" sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }} width={'100%'}>
                 <Tabs
                     value={value}

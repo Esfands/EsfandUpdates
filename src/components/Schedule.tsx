@@ -68,7 +68,7 @@ export const Schedule = () => {
             <Grid container alignItems="center" justifyContent="center">
                 <Box
                     sx={{
-                        width: '85%',
+                        width: '185%',
                         maxHeight: '300px',
                         overflowY: 'auto',
                         overflowX: 'hidden',
@@ -135,10 +135,10 @@ export const Schedule = () => {
         });
 
         return (
-            <Grid container alignItems="center" justifyContent="center" sx={{}}>
+            <Grid container alignItems="center" justifyContent="center" width={'100%'}>
                 <Box
                     sx={{
-                        width: '85%',
+                        width: '100%',
                         maxHeight: '300px',
                         overflowY: 'auto',
                         scrollbarWidth: 'thin',
