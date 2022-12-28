@@ -254,10 +254,10 @@ chrome.runtime.onInstalled.addListener(() => {
     const currentVersion = await getLocalVersion();
     console.log(currentVersion);
     if (Object.keys(currentVersion).length === 0) {
-      chrome.storage.local.set({'version': '1.5.0'});
+      chrome.storage.local.set({'version': '1.5.1'});
       addDefaultStorageData();
       updateData(true);
-    } else if (currentVersion !== '1.5.0') {
-      chrome.storage.local.set({'version': '1.5.0'});
+    } else if (currentVersion !== '1.5.1') {
+      chrome.storage.local.set({'version': '1.5.1'});
     }
   }
