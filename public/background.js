@@ -68,19 +68,24 @@ chrome.runtime.onInstalled.addListener(() => {
           type: 'basic'
         });
       };
-  
+
+      updateStatusBadge(twitchData.live);
       await updateStatus(twitchData.live);
       await updateCategory(twitchData.category);
       await updateTitle(twitchData.title);
   
       return;
     } else if (firstLoad) {
+      updateStatusBadge(twitchData.live);
       await updateStatus(twitchData.live);
       await updateCategory(twitchData.category);
       await updateTitle(twitchData.title);
       await updateVideo(youtubeData.id, youtubeData.title);
     }
   
+    
+    updateStatusBadge(twitchData.live);
+    
     const youtubeId = youtubeData?.id;
     if (youtubeId != null && youtubeId !== '' && youtubeId !== currVideoId) {
       const showYoutubeNotification = notificationData.video;
@@ -190,9 +195,18 @@ chrome.runtime.onInstalled.addListener(() => {
     });
   }
   
+  function updateStatusBadge(live) {
+    if (!live) {
+      chrome.action.setBadgeBackgroundColor({ color: "#f82c2a" });
+      chrome.action.setBadgeText({ text: "​" });
+    } else {
+      chrome.action.setBadgeBackgroundColor({ color: "#00d36a" });
+      chrome.action.setBadgeText({ text: "​" });
+    }
+  }
   async function updateStatus(live) {
     const localStreamData = await getLocalStreamData();
-    localStreamData.live = live;
+    localStreamData.live = live; 
     saveStreamData(localStreamData);
   }
   
@@ -240,10 +254,10 @@ chrome.runtime.onInstalled.addListener(() => {
     const currentVersion = await getLocalVersion();
     console.log(currentVersion);
     if (Object.keys(currentVersion).length === 0) {
-      chrome.storage.local.set({'version': '1.4.3'});
+      chrome.storage.local.set({'version': '1.5.1'});
       addDefaultStorageData();
       updateData(true);
-    } else if (currentVersion !== '1.4.3') {
-      chrome.storage.local.set({'version': '1.4.3'});
+    } else if (currentVersion !== '1.5.1') {
+      chrome.storage.local.set({'version': '1.5.1'});
     }
   }
