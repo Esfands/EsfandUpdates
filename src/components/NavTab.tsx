@@ -3,6 +3,8 @@ import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { YoutubePanel } from './YoutubePanel';
 import { TwitterPanel } from './TwitterPanel';
 import { Schedule } from './Schedule';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar, faHouse } from '@fortawesome/free-solid-svg-icons';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -46,16 +48,40 @@ export const NavTab = () => {
 
     return (
         <Grid container alignItems="center" justifyContent="center" sx={{}}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }} width={'100%'}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
                     variant="fullWidth"
-                    aria-label="basic tabs example"
-                    sx={{ color: 'white' }}
+                    aria-label="Home and Schedule tabs"
+                    sx={{
+                        color: 'grey',
+                        '& .MuiTabs-indicator': {
+                            backgroundColor: 'rgb(100, 65, 165)',
+                        },
+                        '& .MuiTab-root.Mui-selected': {
+                            color: 'white',
+                        },
+                    }}
                 >
-                    <Tab sx={{ color: 'white' }} label="Home" {...a11yProps(0)} />
-                    <Tab sx={{ color: 'white' }} label="Schedule" {...a11yProps(1)} />
+                    <Tab
+                        sx={{
+                            color: 'grey',
+                            paddingTop: '0',
+                        }}
+                        icon={<FontAwesomeIcon icon={faHouse} />}
+                        label="Home"
+                        {...a11yProps(0)}
+                    />
+                    <Tab
+                        sx={{
+                            color: 'grey',
+                            paddingTop: '0',
+                        }}
+                        icon={<FontAwesomeIcon icon={faCalendar} />}
+                        label="Schedule"
+                        {...a11yProps(1)}
+                    />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
