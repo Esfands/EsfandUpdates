@@ -28,7 +28,6 @@ export const ScheduleEvent = ({ segment }: any) => {
     const [boxArtUrl, setBoxArtUrl] = useState('');
 
     useEffect(() => {
-        console.log(segment);
         fetch(`https://twitch.otkdata.com/api/games/${segment.categoryId}`, {
             method: 'GET',
             mode: 'cors',
@@ -36,7 +35,6 @@ export const ScheduleEvent = ({ segment }: any) => {
             .then((response) => response.json())
             .then(
                 (result) => {
-                    console.log(result.data.box_art_url);
                     setBoxArtUrl(buildImageUrl(result.data[0].box_art_url, '85', '113'));
                     setIsLoaded(true);
                 },
