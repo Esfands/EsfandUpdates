@@ -22,6 +22,15 @@ export const TwitterPanel = () => {
                 url +
                 '</a>'
         );
+        return text.replace(
+            urlRegex,
+            (url) =>
+                '<a style="color:#970e0f" target="_blank" href="' +
+                url +
+                '" rel="noopener noreferrer">' +
+                url +
+                '</a>'
+        );
     }
 
     useEffect(() => {
