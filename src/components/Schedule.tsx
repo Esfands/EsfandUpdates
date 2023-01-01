@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ScheduleEvent } from './ScheduleEvent';
-import { Grid, CircularProgress, Stack, Box, Skeleton, Typography } from '@mui/material';
+import { Grid, Stack, Box, Skeleton, Typography } from '@mui/material';
 
 type ScheduleSegment = {
     startTime: string;
@@ -17,6 +17,7 @@ export const Schedule = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isError, setError] = useState(false);
     const errorMessage = 'There was an error loading the schedule. Please try again later.';
+    const emptyMessage = 'There are currently no events in the schedule. Please check again later.';
 
     function buildScheduleWithCategories(): Map<string, ScheduleSegment[]> {
         const updatedSegments = new Map<string, ScheduleSegment[]>();
@@ -68,7 +69,7 @@ export const Schedule = () => {
             <Grid container alignItems="center" justifyContent="center">
                 <Box
                     sx={{
-                        width: '185%',
+                        width: '100%',
                         maxHeight: '300px',
                         overflowY: 'auto',
                         overflowX: 'hidden',
@@ -111,6 +112,14 @@ export const Schedule = () => {
             </Grid>
         );
     } else if (isLoaded) {
+        if (schedule === null) {
+            return (
+                <Grid container alignItems="center" justifyContent="center">
+                    <p>{emptyMessage}</p>
+                </Grid>
+            );
+        }
+
         const scheduleData: JSX.Element[] = [];
         let j = 0;
         buildScheduleWithCategories().forEach((segmentData, dateKey) => {
