@@ -5,6 +5,23 @@ body, section {
     background-color: #101316;
     overflow: auto;
     margin:auto;
+    scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar {
+  width: 0.4em;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .panel {
@@ -15,22 +32,3 @@ a {
     color: white !important;
     text-decoration: none;
 }
-
-list {
-    overflowY: "auto",
-    margin: 0,
-    padding: 0,
-    listStyle: "none",
-    height: "100%",
-    '&::-webkit-scrollbar': {
-      width: '0.4em'
-    },
-    '&::-webkit-scrollbar-track': {
-      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
-      webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
-    },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0,0,0,.1)',
-      outline: '1px solid slategrey'
-    }
-  }

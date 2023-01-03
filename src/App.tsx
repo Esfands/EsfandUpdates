@@ -29,7 +29,7 @@ function App() {
 
                 const jsonResponse = await response.json();
                 const flagValue = jsonResponse.data[0].enabled;
-                setScheduleFlag(false);
+                setScheduleFlag(flagValue);
             } catch {
                 console.log('Error occured while checking schedule feature flag.');
             }
