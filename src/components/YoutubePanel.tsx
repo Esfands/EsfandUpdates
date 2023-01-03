@@ -43,6 +43,7 @@ export const YoutubePanel = () => {
 
     const getDecodedTitle = () =>
         videoInfo.title.replace(/&#(\d+);/g, (match: any, dec: number) => String.fromCharCode(dec));
+        videoInfo.title.replace(/&#(\d+);/g, (match: any, dec: number) => String.fromCharCode(dec));
 
     if (!isLoaded && !isError) {
         return (
