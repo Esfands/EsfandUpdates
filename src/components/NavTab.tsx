@@ -12,6 +12,10 @@ interface TabPanelProps {
     value: number;
 }
 
+type TwitterFlagProps = {
+    twitterFlag: boolean;
+};
+
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
@@ -40,7 +44,7 @@ function a11yProps(index: number) {
     };
 }
 
-export const NavTab = () => {
+export const NavTab = ({ twitterFlag }: TwitterFlagProps) => {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -87,7 +91,7 @@ export const NavTab = () => {
             </Box>
             <TabPanel value={value} index={0}>
                 <YoutubePanel />
-                <TwitterPanel />
+                {twitterFlag ? <TwitterPanel /> : null}
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <Schedule />

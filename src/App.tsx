@@ -11,10 +11,14 @@ function App() {
         url.replace('{width}', width).replace('{height}', height);
 
     const [scheduleFlag, setScheduleFlag] = useState<boolean>(false);
+    const [twitterFlag, setTwitterFlag] = useState<boolean>(false);
 
     useEffect(() => {
         const flagController = new AbortController();
         const flagSignal = flagController.signal;
+
+        const twitterFlagController = new AbortController();
+        const twitterFlagSignal = twitterFlagController.signal;
 
         const streamController = new AbortController();
         const streamSignal = streamController.signal;
@@ -32,6 +36,22 @@ function App() {
                 setScheduleFlag(flagValue);
             } catch {
                 console.log('Error occured while checking schedule feature flag.');
+            }
+        };
+
+        const fetchTwitterFlag = async () => {
+            try {
+                const response = await fetch('https://flags.otkdata.com/api/flags/twitterflag', {
+                    method: 'GET',
+                    mode: 'cors',
+                    signal: twitterFlagSignal,
+                });
+
+                const jsonResponse = await response.json();
+                const flagValue = jsonResponse.data[0].enabled;
+                setTwitterFlag(flagValue);
+            } catch {
+                console.log('Error occured while checking twitter feature flag.');
             }
         };
 
@@ -59,12 +79,15 @@ function App() {
         };
 
         fetchScheduleFlag();
+        fetchTwitterFlag();
         fetchStreamData();
 
         return () => {
             flagController.abort();
+            twitterFlagController.abort();
             streamController.abort();
             setScheduleFlag(false);
+            setTwitterFlag(false);
         };
     }, []);
 
@@ -73,20 +96,31 @@ function App() {
             <div>
                 <TitleBar />
                 <StreamPanel />
-                <NavTab />
+                <NavTab twitterFlag={twitterFlag} />
                 <BottomBar />
             </div>
         );
     } else {
-        return (
-            <div>
-                <TitleBar />
-                <StreamPanel />
-                <YoutubePanel />
-                <TwitterPanel />
-                <BottomBar />
-            </div>
-        );
+        if (twitterFlag) {
+            return (
+                <div>
+                    <TitleBar />
+                    <StreamPanel />
+                    <YoutubePanel />
+                    <TwitterPanel />
+                    <BottomBar />
+                </div>
+            );
+        } else {
+            return (
+                <div>
+                    <TitleBar />
+                    <StreamPanel />
+                    <YoutubePanel />
+                    <BottomBar />
+                </div>
+            );
+        }
     }
 }
 
