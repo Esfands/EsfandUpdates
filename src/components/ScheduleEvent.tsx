@@ -72,7 +72,9 @@ export const ScheduleEvent = ({ segment }: any) => {
                         <Typography component="div" variant="body2" sx={{ fontWeight: 'bold' }}>
                             <div
                                 dangerouslySetInnerHTML={{
-                                    __html: DOMPurify.sanitize(addTwitchTag(segment.title)),
+                                    __html: DOMPurify.sanitize(addTwitchTag(segment.title), {
+                                        ADD_ATTR: ['target'],
+                                    }),
                                 }}
                             ></div>
                         </Typography>
