@@ -1,17 +1,7 @@
 import { useState, useEffect } from 'react';
-import {
-    Card,
-    CardMedia,
-    Grid,
-    Link,
-    Typography,
-    Paper,
-    CardContent,
-    IconButton,
-    Box,
-    Skeleton,
-} from '@mui/material';
+import { Card, CardMedia, Typography, Paper, CardContent, Box, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import DOMPurify from 'dompurify';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: '#1A2027',
@@ -20,9 +10,34 @@ const Item = styled(Paper)(({ theme }) => ({
     color: 'white',
 }));
 
+const taggableMembers: string[] = [
+    '@nmplol',
+    '@asmongold',
+    '@sodapoppin',
+    '@mizkif',
+    '@emiru',
+    '@extraemily',
+    '@cyr',
+    '@tectone',
+    '@otknetwork',
+    '@starforgesystems',
+    '@bonnierabbit',
+];
+
 export const ScheduleEvent = ({ segment }: any) => {
     const buildImageUrl = (url: string, width: string, height: string) =>
         url.replace('{width}', width).replace('{height}', height);
+
+    //prettier-ignore
+    function addTwitchTag(title: string) {
+        taggableMembers.forEach((member) => {
+            title = title.replace(member,
+                `<a href="https://twitch.tv/${member.substring(1)}" target="_blank rel="noopener noreferrer">${member}</a>`
+            );
+        });
+
+        return title;
+    }
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [boxArtUrl, setBoxArtUrl] = useState('');
@@ -55,7 +70,11 @@ export const ScheduleEvent = ({ segment }: any) => {
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <CardContent sx={{ flex: '1 0 auto' }}>
                         <Typography component="div" variant="body2" sx={{ fontWeight: 'bold' }}>
-                            {segment.title}
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(addTwitchTag(segment.title)),
+                                }}
+                            ></div>
                         </Typography>
                         <Typography variant="subtitle2" color="white" component="div">
                             {segment.startTime}
