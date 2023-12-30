@@ -8,6 +8,7 @@ import {
     faDiscord,
     faInstagram,
     faReddit,
+    faTiktok,
 } from '@fortawesome/free-brands-svg-icons';
 import { styled } from '@mui/material/styles';
 
@@ -63,6 +64,11 @@ export const BottomBar = () => (
                 <Link href="https://reddit.com/r/esfandtv" target="_blank" rel="noopener noreferrer">
                     <StyledIconButton>
                         <FontAwesomeIcon icon={faReddit} />
+                    </StyledIconButton>
+                </Link>
+                <Link href="https://tiktok.com/@esfandtv" target="_blank" rel="noopener noreferrer">
+                    <StyledIconButton>
+                        <FontAwesomeIcon icon={faTiktok} />
                     </StyledIconButton>
                 </Link>
             </Box>
