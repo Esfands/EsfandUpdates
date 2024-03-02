@@ -22,6 +22,10 @@ const taggableMembers: string[] = [
     '@otknetwork',
     '@starforgesystems',
     '@bonnierabbit',
+    '@willneff',
+    '@zackrawrr',
+    '@graycen',
+    '@wakewilder',
 ];
 
 export const ScheduleEvent = ({ segment }: any) => {

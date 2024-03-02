@@ -3,12 +3,12 @@ import { Box, Button, Grid, IconButton, Link } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTwitch,
-    faTwitter,
     faYoutube,
     faDiscord,
     faInstagram,
     faReddit,
     faTiktok,
+    faXTwitter,
 } from '@fortawesome/free-brands-svg-icons';
 import { styled } from '@mui/material/styles';
 
@@ -43,7 +43,7 @@ export const BottomBar = () => (
                 </Link>
                 <Link href="https://twitter.com/esfandtv" target="_blank" rel="noopener noreferrer">
                     <StyledIconButton>
-                        <FontAwesomeIcon icon={faTwitter} />
+                        <FontAwesomeIcon icon={faXTwitter} />
                     </StyledIconButton>
                 </Link>
                 <Link href="https://youtube.com/esfandtv" target="_blank" rel="noopener noreferrer">

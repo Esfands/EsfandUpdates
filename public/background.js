@@ -29,9 +29,10 @@ chrome.runtime.onInstalled.addListener(() => {
   async function updateData(firstLoad) {
     const responseData = await getStreamData();
     const twitchData = responseData.twitch;
-    const youtubeData = responseData.video;
     const announcementData = responseData.announcement;
 
+    const youtubeData = await getVideoData();
+    
     const data = await getLocalStreamData();
     const currLive = data.live;
     const currCategory = data.category;
@@ -80,16 +81,16 @@ chrome.runtime.onInstalled.addListener(() => {
       await updateStatus(twitchData.live);
       await updateCategory(twitchData.category);
       await updateTitle(twitchData.title);
-      await updateVideo(youtubeData.id, youtubeData.title);
+      await updateVideo(youtubeData.videoId, youtubeData.title);
     }
   
     
     updateStatusBadge(twitchData.live);
     
-    const youtubeId = youtubeData?.id;
-    if (youtubeId != null && youtubeId !== '' && youtubeId !== currVideoId) {
+    const youtubeId = youtubeData?.videoId;
+    if (youtubeId != null && youtubeId !== '' && youtubeId !== undefined && youtubeId !== currVideoId) {
       const showYoutubeNotification = notificationData.video;
-      await updateVideo(youtubeData.id, youtubeData.title);
+      await updateVideo(youtubeData.videoId, youtubeData.title);
       if (showYoutubeNotification) {
         chrome.notifications.create('video', {
           iconUrl: '/images/esfand_icon128.png',
@@ -140,6 +141,23 @@ chrome.runtime.onInstalled.addListener(() => {
         return data[0];
     } else {
         return Promise.reject('There was an error in retrieving the data.');
+    }
+  }
+
+  async function getVideoData() {  
+    const res = await fetch('https://otkcdn.otkdata.com/api/videos/EsfandTV?count=1', {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json;'
+        },
+        mode: 'cors',
+    });
+  
+    const {data} = await res.json();
+    if (res.ok) {
+      return data.videos[0];
+    } else {
+      return null;
     }
   }
   
@@ -254,10 +272,10 @@ chrome.runtime.onInstalled.addListener(() => {
     const currentVersion = await getLocalVersion();
     console.log(currentVersion);
     if (Object.keys(currentVersion).length === 0) {
-      chrome.storage.local.set({'version': '1.5.5'});
+      chrome.storage.local.set({'version': '1.6.0'});
       addDefaultStorageData();
       updateData(true);
-    } else if (currentVersion !== '1.5.5') {
-      chrome.storage.local.set({'version': '1.5.5'});
+    } else if (currentVersion !== '1.6.0') {
+      chrome.storage.local.set({'version': '1.6.0'});
     }
   }

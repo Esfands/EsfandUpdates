@@ -15,7 +15,7 @@ export const YoutubePanel = () => {
 
         const fetchYoutube = async () => {
             try {
-                const response = await fetch('https://cdn.otkdata.com/api/videos/esfandtv?count=1', {
+                const response = await fetch('https://otkcdn.otkdata.com/api/videos/EsfandTV?count=1', {
                     method: 'GET',
                     mode: 'cors',
                     signal: signal,
@@ -23,7 +23,7 @@ export const YoutubePanel = () => {
 
                 if (!isLoaded) {
                     const jsonResponse = await response.json();
-                    setVideoInfo(jsonResponse.data[0].videoData.items[0].snippet);
+                    setVideoInfo(jsonResponse.data.videos[0]);
                 }
                 setIsLoaded(true);
             } catch {
@@ -64,7 +64,7 @@ export const YoutubePanel = () => {
         return (
             <Grid container alignItems="center" justifyContent="center">
                 <Link
-                    href={`https://youtube.com/watch?v=${videoInfo.resourceId.videoId}`}
+                    href={`https://youtube.com/watch?v=${videoInfo.videoId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -79,8 +79,8 @@ export const YoutubePanel = () => {
                     >
                         <CardMedia
                             component="img"
-                            image={videoInfo.thumbnails.medium.url}
-                            sx={{ overflow: 'hidden', maxHeight: 360 }}
+                            image={videoInfo.thumbnail}
+                            sx={{ overflow: 'hidden', height: '100%' }}
                         />
                         <div
                             style={{
