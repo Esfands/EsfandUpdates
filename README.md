@@ -7,3 +7,4 @@ The extension also allows quick access to his current twitch title and category 
 
 Extension is available in the Chrome Web Store: https://chrome.google.com/webstore/detail/esfand-updates/lflganldnkcbanfenpokfhnibioleaam
 
+## Contributing
